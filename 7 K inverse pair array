@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int kInversePairs(int n, int k) {
+        //dp[i][j]--let suppose agar main ith element le rha then wo sabse bada hoga till now okay.
+//so hamare paas do option honge ya toh usse ek pair bana lu ya phir usko last mein hi rakh du
+//toh dp[i][k] jo hoga wo dp[i-1][k]+dp[i][k-1]-dp[i-1][k-1] hoga kyoki hm agar uske pahle wale element se pair bana rhae honge na toh use minus krna padega
+     if(n<=2&&n==k)return 0;
+       int dp[n+1][k+1];
+       memset(dp, 0, sizeof(dp));
+       for(int i=0; i<=n; i++){
+           dp[i][0]=1;
+
+       }
+       int mod=1e9+7;
+       for(int i=1; i<=n; i++){
+           for(int j=1; j<=k; j++){
+               dp[i][j]=(dp[i-1][j]+dp[i][j-1])%(int)(1e9+7);
+               if(j>=i){
+                   dp[i][j]=(dp[i][j]-dp[i-1][j-i]+(int)(1e9+7))%(int)(1e9+7);
+               }
+           }
+       }
+        return dp[n][k]%(int)(1e9+7);
+   
+       //if j bada hoga i se mtlb ki aur bhi chances hai inverse pair banane ke toh us cases mein hm dp[i-1][j-1] jo ki hai ki i ke ek pahle element tk j-i inverse bana skte hai use minus kr denge taki count sahi rhh sake
+      
+    }
+};
